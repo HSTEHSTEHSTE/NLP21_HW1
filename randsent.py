@@ -222,7 +222,7 @@ def main():
         if args.tree:
             prettyprint_path = os.path.join(os.getcwd(), 'prettyprint.pl')
             t = os.system(f'echo "{tree}" | perl "{prettyprint_path}"')
-
+        print(sentence)
 
 if __name__ == "__main__":
     main()
