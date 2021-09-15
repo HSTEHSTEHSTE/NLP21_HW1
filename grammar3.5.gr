@@ -1,0 +1,158 @@
+# Symbols in the grammar are case-sensitive.
+# 
+# This grammar uses a convention that
+#    - terminals are lowercase          (president)
+#       - except for names              (Sally)
+#    - preterminals are capitalized     (Noun)
+#    - other nonterminals are all-caps  (NP)
+
+# Rules for creating full sentences.
+
+1	ROOT	S .
+0.2	ROOT	S !
+0.2 ROOT    NP V_C S .
+0.2 ROOT    it Verb_Transitive_Emotive NP that S .
+0.2 ROOT    that S Verb_Transitive_Emotive NP .
+0.1	ROOT	is it true that S ?     # mixing terminals and nonterminals is ok.
+
+# The basic grammar rules.  Here's what the abbreviations stand for:
+#    S  = sentence
+#    NP = noun phrase
+#    VP = verb phrase
+#    PP = prepositional phrase
+#    D = determiner (sometimes called "article")
+#    Prep = preposition
+#    Adj = adjective
+#    Adv = adverb
+#    V_C = conjunctive verb
+
+1	S	    NP VP
+1	VP	    Verb_Transitive NP
+0.5 VP      Verb_Intransitive
+0.1 NP      NP and NP
+0.1 NP      Name
+0.1	NP	    NP PP
+1	PP	    Prep NP
+0.5 V_C     Verb_Conjunctive that
+
+# Grammar rules surrounding determiners
+#    D_D = determiner, definite
+#    D_I = determiner, indefinite
+#    D_I_C = determiner, indefinite, followed by consonant
+#    D_I_V = determiner, indefinite, followed by vowel
+#    MN = modified noun
+#    MN_C = modified noun, consonant leading
+#    MN_V = modified noun, vowel leading
+
+1   NP      D_D MN
+1   NP      D_I_C MN_C
+0.1 NP      D_I_V MN_V
+
+1   MN      MN_C
+0.1 MN      MN_V
+
+1	D_D	    the
+0.2	D_D 	every
+1	D_I_C	a
+1   D_I_V   an
+
+2   MN_C    Adj_C MN
+2   MN_V    Adj_V MN
+0.5 Adj_C   Adv_C Adj
+0.5 Adj_V   Adv_V Adj
+
+1   MN      Noun
+1   MN_C    Noun_C
+1   MN_V    Noun_V
+
+# Verb transformation. Different types of verbs can take on
+# varying grammatical rules in a sentence. 
+
+# Two conjunctive verbs in a row
+0.5 Verb_Conjunctive    Verb_Conjunctive and Verb_Conjunctive
+
+# Two intransitives in a row
+0.5 Verb_Intransitive   Verb_Intransitive and Verb_Intransitive
+
+# Two transitives in a row
+0.5 Verb_Transitive     Verb_Transitive and Verb_Transitive
+
+# Emotive transitives can function transitives
+0.5 Verb_Transitive     Verb_Transitive_Emotive
+
+# Vocabulary.  Your program can see that "ate" is a terminal
+# symbol because there exists no rule for rewriting it.
+# Any symbol that can rewrite as a terminal (or a string of 
+# terminals, like "chief of staff") is called a "preterminal."  Notice 
+# that a preterminal is a special kind of nonterminal.
+
+0.5 Verb_Conjunctive    thought
+0.5 Verb_Conjunctive    saw
+0.5 Verb_Conjunctive    understood
+0.5 Verb_Conjunctive    heard
+0.5 Verb_Conjunctive    believed
+
+1   Verb_Intransitive   sighed
+1   Verb_Intransitive   ate
+1   Verb_Intransitive   understood
+1   Verb_Intransitive   slept
+1   Verb_Intransitive   shouted
+1   Verb_Intransitive   appeared
+
+1   Verb_Transitive	ate
+2	Verb_Transitive	wanted
+0.2	Verb_Transitive	kissed
+2	Verb_Transitive	understood
+0.1	Verb_Transitive	pickled
+0.1 Verb_Transitive haunted
+0.2 Verb_Transitive asked for
+0.1 Verb_Transitive worked on
+
+1   Verb_Transitive_Emotive  perplexed
+1   Verb_Transitive_Emotive  shocked
+1   Verb_Transitive_Emotive  dawned upon
+1   Verb_Transitive_Emotive  worried
+1   Verb_Transitive_Emotive  enraged
+
+1   Noun    Noun_C
+0.1 Noun    Noun_V
+1	Noun_C	president
+1	Noun_C	sandwich
+1	Noun_C	pickle
+1	Noun_C	chief of staff
+1	Noun_C	floor
+1   Noun_C  spectre
+1   Noun_C  desk
+1   Noun_C  proposal
+1   Noun_V  orange
+
+1   Name    Sally
+1   Name    Henry
+1   Name    Marx
+1   Name    Europe
+
+1   Adj     Adj_C
+0.1 Adj     Adj_V
+1	Adj_C	fine
+1	Adj_C	delicious
+1	Adj_C	perplexed
+1	Adj_C	pickled
+1   Adj_V   angry
+
+1   Adv   Adv_C
+0.1 Adv   Adv_V
+1   Adv_C truly
+1   Adv_C very
+1   Adv_V incredibly
+1   Adv_C magnificently
+1   Adv_V outrageously
+1   Adv_V overwhelmingly
+1   Adv_V increasingly
+1   Adv_C surprisingly
+1   Adv_C dauntingly
+1   Adv_C remarkably
+
+1	Prep	with
+1	Prep	on
+1	Prep	under
+1	Prep	in

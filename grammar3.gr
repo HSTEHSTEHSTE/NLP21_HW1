@@ -1,0 +1,127 @@
+# Symbols in the grammar are case-sensitive.
+# 
+# This grammar uses a convention that
+#    - terminals are lowercase          (president)
+#       - except for names              (Sally)
+#    - preterminals are capitalized     (Noun)
+#    - other nonterminals are all-caps  (NP)
+
+# Rules for creating full sentences.
+
+1	ROOT	S .
+0.2	ROOT	S !
+0.2 ROOT    NP V_C S .
+0.2 ROOT    it Verb_Transitive_Emotive NP that S .
+0.2 ROOT    that S Verb_Transitive_Emotive NP .
+0.1	ROOT	is it true that S ?     # mixing terminals and nonterminals is ok.
+
+# The basic grammar rules.  Here's what the abbreviations stand for:
+#    S  = sentence
+#    NP = noun phrase
+#    VP = verb phrase
+#    PP = prepositional phrase
+#    Det = determiner (sometimes called "article")
+#    Prep = preposition
+#    Adj = adjective
+#    Adv = adverb
+#    V_C = conjunctive verb
+
+1	S	    NP VP
+1	VP	    Verb_Transitive NP
+0.5 VP      Verb_Intransitive
+1	NP	    Det Noun
+0.1 NP      NP and NP
+0.1 NP      Name
+0.1	NP	    NP PP
+1	PP	    Prep NP
+2	Noun	Adj Noun
+0.5 Adj     Adv Adj
+0.5 V_C     Verb_Conjunctive that
+
+# Verb transformation. Different types of verbs can take on
+# varying grammatical rules in a sentence. 
+
+# Two conjunctive verbs in a row
+0.5 Verb_Conjunctive    Verb_Conjunctive and Verb_Conjunctive
+
+# Two intransitives in a row
+0.5 Verb_Intransitive   Verb_Intransitive and Verb_Intransitive
+
+# Two transitives in a row
+0.5 Verb_Transitive     Verb_Transitive and Verb_Transitive
+
+# Emotive transitives can function transitives
+0.5 Verb_Transitive     Verb_Transitive_Emotive
+
+# Vocabulary.  Your program can see that "ate" is a terminal
+# symbol because there exists no rule for rewriting it.
+# Any symbol that can rewrite as a terminal (or a string of 
+# terminals, like "chief of staff") is called a "preterminal."  Notice 
+# that a preterminal is a special kind of nonterminal.
+
+0.5 Verb_Conjunctive    thought
+0.5 Verb_Conjunctive    saw
+0.5 Verb_Conjunctive    understood
+0.5 Verb_Conjunctive    heard
+0.5 Verb_Conjunctive    believed
+
+1   Verb_Intransitive   sighed
+1   Verb_Intransitive   ate
+1   Verb_Intransitive   understood
+1   Verb_Intransitive   slept
+1   Verb_Intransitive   shouted
+1   Verb_Intransitive   appeared
+
+1   Verb_Transitive	ate
+2	Verb_Transitive	wanted
+0.2	Verb_Transitive	kissed
+2	Verb_Transitive	understood
+0.1	Verb_Transitive	pickled
+0.1 Verb_Transitive haunted
+0.2 Verb_Transitive asked for
+0.1 Verb_Transitive worked on
+
+1   Verb_Transitive_Emotive  perplexed
+1   Verb_Transitive_Emotive  shocked
+1   Verb_Transitive_Emotive  dawned upon
+1   Verb_Transitive_Emotive  worried
+1   Verb_Transitive_Emotive  enraged
+
+1	Det	the
+1	Det	a
+0.2	Det	every
+
+1	Noun	president
+1	Noun	sandwich
+1	Noun	pickle
+1	Noun	chief of staff
+1	Noun	floor
+1   Noun    spectre
+1   Noun    desk
+1   Noun    proposal
+
+1   Name    Sally
+1   Name    Henry
+1   Name    Marx
+1   Name    Europe
+
+1	Adj	fine
+1	Adj	delicious
+1	Adj	perplexed
+1	Adj	pickled
+
+1   Adv truly
+1   Adv very
+1   Adv incredibly
+1   Adv magnificently
+1   Adv outrageously
+1   Adv overwhelmingly
+1   Adv increasingly
+1   Adv surprisingly
+1   Adv dauntingly
+1   Adv remarkably
+
+1	Prep	with
+1	Prep	on
+1	Prep	under
+1	Prep	in

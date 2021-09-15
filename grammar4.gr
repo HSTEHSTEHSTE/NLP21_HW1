@@ -1,0 +1,380 @@
+# Symbols in the grammar are case-sensitive.
+# 
+# This grammar uses a convention that
+#    - terminals are lowercase          (president)
+#       - except for names              (Sally)
+#    - preterminals are capitalized     (Noun)
+#    - other nonterminals are all-caps  (NP)
+
+# Rules for creating full sentences. Some of the basic abbreviations are listed below:
+#    S  = sentence
+#    Q_YesOrNo  = yes or no question
+
+1	    ROOT	S .
+1       ROOT    S_Past .
+1       ROOT    S_PresentParticiple .
+0.2	    ROOT	S !
+0.2	    ROOT	S_Past !
+0.2	    ROOT	S_PresentParticiple !
+0.05    ROOT    S ?
+0.05    ROOT    S_Past ?
+0.05    ROOT    S_PresentParticiple ?
+0.2     ROOT    Q_YesOrNo ?
+0.2     ROOT    NP_Subject Verb_Conjunctive_Past that S_Past .
+0.2     ROOT    NP_Subject_NoneThirdSingular Verb_Conjunctive_Present_NoneThirdSingular that S .
+0.2     ROOT    NP_Subject_NoneThirdSingular Verb_Conjunctive_Present_NoneThirdSingular that S_PresentParticiple .
+0.2     ROOT    NP_Subject_NoneThirdSingular Verb_Conjunctive_Present_NoneThirdSingular that S_Past .
+0.2     ROOT    NP_Subject_ThirdSingular Verb_Conjunctive_Present_ThirdSingular that S .
+0.2     ROOT    NP_Subject_ThirdSingular Verb_Conjunctive_Present_ThirdSingular that S_PresentParticiple .
+0.2     ROOT    NP_Subject_ThirdSingular Verb_Conjunctive_Present_ThirdSingular that S_Past .
+0.2     ROOT    it Verb_Transitive_Emotive_Past NP that S .
+0.2     ROOT    it Verb_Transitive_Emotive_Past NP that S_PresentParticiple .
+0.2     ROOT    it Verb_Transitive_Emotive_Past NP that S_Past .
+0.2     ROOT    that S_Past Verb_Transitive_Emotive_Past NP_Object .
+0.1	    ROOT	is it true that S ?
+0.1	    ROOT	is it true that S_PresentParticiple ?
+0.1	    ROOT	is it true that S_Past ?
+
+# The basic grammar rules.  Here's what the abbreviations stand for:
+#    NP = noun phrase
+#    VP = verb phrase
+#    PP = prepositional phrase
+#    D = determiner (sometimes called "article")
+#    Preposition = preposition
+#    Adjective = adjective
+#    Adverb = adverb
+#    V_Conjunctive = conjunctive verb
+
+1	S_Past          NP_Subject VP_Past
+1   S               NP_Subject_ThirdSingular VP_Present_ThirdSingular
+1   S               NP_Subject_NoneThirdSingular VP_Present_NoneThirdSingular
+1   S               NP_Subject_Plural VP_Present_NoneThirdSingular
+0.1	NP_Subject	    NP_Subject PP_Subject
+1	PP_Subject	    Preposition NP_Subject
+0.5 V_Conjunctive   Verb_Conjunctive that
+
+1   S_PresentParticiple I am VP_PresentParticiple
+1   S_PresentParticiple I was VP_PresentParticiple
+1   S_PresentParticiple I have been VP_PresentParticiple
+1   S_PresentParticiple you are VP_PresentParticiple
+1   S_PresentParticiple you were VP_PresentParticiple
+1   S_PresentParticiple you have been VP_PresentParticiple
+1   S_PresentParticiple NP_Subject_Plural are VP_PresentParticiple
+1   S_PresentParticiple NP_Subject_Plural were VP_PresentParticiple
+1   S_PresentParticiple NP_Subject_Plural have been VP_PresentParticiple
+1   S_PresentParticiple NP_Subject_NoneThirdSingular are VP_PresentParticiple
+1   S_PresentParticiple NP_Subject_NoneThirdSingular were VP_PresentParticiple
+1   S_PresentParticiple NP_Subject_NoneThirdSingular have been VP_PresentParticiple
+1   S_PresentParticiple NP_Subject_ThirdSingular is VP_PresentParticiple
+1   S_PresentParticiple NP_Subject_ThirdSingular was VP_PresentParticiple
+1   S_PresentParticiple NP_Subject_ThirdSingular has been VP_PresentParticiple
+10  S_PresentParticiple NP_Subject had been VP_PresentParticiple
+
+1	VP_Past	                        Verb_Transitive_Past NP_Object
+0.5 VP_Past                         Verb_Intransitive_Past
+1	VP_Present_ThirdSingular	    Verb_Transitive_Present_ThirdSingular NP_Object
+0.5 VP_Present_ThirdSingular        Verb_Intransitive_Present_ThirdSingular
+1	VP_Present_NoneThirdSingular	Verb_Transitive_Present_NoneThirdSingular NP_Object
+0.5 VP_Present_NoneThirdSingular    Verb_Intransitive_Present_NoneThirdSingular
+1	VP_PresentParticiple        	Verb_Transitive_PresentParticiple NP_Object
+0.5 VP_PresentParticiple            Verb_Intransitive_PresentParticiple
+
+1   Q_YesOrNo   Verb_Auxiliary_Present_NoneThirdSingular NP_NoneThirdSingular VP_Present_NoneThirdSingular
+1   Q_YesOrNo   Verb_Auxiliary_Present NP VP_Present_NoneThirdSingular
+1   Q_YesOrNo   Verb_Auxiliary_Present_ThirdSingular NP_ThirdSingular VP_Present_NoneThirdSingular
+1   Q_YesOrNo   Verb_Auxiliary_PresentParticiple_FirstPerson I VP_PresentParticiple
+
+# Grammar rules surrounding determiners
+#    D_Definite = determiner, definite
+#    D_Indefinite = determiner, indefinite
+#    D_Indefinite_Consonant = determiner, indefinite, followed by consonant
+#    D_Indefinite_Vowel = determiner, indefinite, followed by vowel
+#    MN = modified noun, singleton
+#    MN_Consonant = modified noun, consonant leading
+#    MN_Vowel = modified noun, vowel leading
+
+1   NP  NP_ThirdSingular
+
+1   NP_ThirdSingular      D_Definite MN
+1   NP_ThirdSingular      D_Indefinite_Consonant MN_Consonant
+0.1 NP_ThirdSingular      D_Indefinite_Vowel MN_Vowel
+
+0.5     NP_Subject  NP_Subject_NoneThirdSingular
+0.5     NP_Subject  NP_Subject_Plural
+1       NP_Subject  NP_Subject_ThirdSingular
+
+1   NP_Subject_ThirdSingular    D_Definite MN
+1   NP_Subject_ThirdSingular    D_Indefinite_Consonant MN_Consonant
+0.1 NP_Subject_ThirdSingular    D_Indefinite_Vowel MN_Vowel
+
+1   NP_Subject_Plural    D_Definite_Plural MN_Plural
+1   NP_Subject_Plural    D_Indefinite_Plural MN_Plural
+
+1    NP                              NP_NoneThirdSingular
+0.01 NP_NoneThirdSingular            NP_ThirdSingular and NP_ThirdSingular
+0.01 NP_NoneThirdSingular            NP_NoneThirdSingular and NP_ThirdSingular
+0.01 NP_NoneThirdSingular            NP_ThirdSingular and NP_NoneThirdSingular
+0.01 NP_NoneThirdSingular            NP_NoneThirdSingular and NP_NoneThirdSingular
+0.01 NP_Subject_NoneThirdSingular    NP_Subject_ThirdSingular and NP_Subject_ThirdSingular
+
+1   MN      MN_Consonant
+0.1 MN      MN_Vowel
+
+1	D_Definite	            the
+0.2	D_Definite 	            every
+1   D_Indefinite            Number_Singular
+1   D_Indefinite            no
+1	D_Indefinite_Consonant	a
+1   D_Indefinite_Vowel      an
+
+1   D_Definite_Plural   the
+1   D_Indefinite_Plural Number_Plural
+
+1   Number_Singular     zero
+10  Number_Singular     one 
+7   Number_Plural       two
+5   Number_Plural       three 
+4   Number_Plural       four
+3   Number_Plural       five
+
+2   MN_Consonant            Adjective_Consonant MN
+2   MN_Vowel                Adjective_Vowel MN
+2   MN_Plural               Adjective MN_Plural
+0.5 Adjective_Consonant     Adverb_Consonant Adjective
+0.5 Adjective_Vowel         Adverb_Vowel Adjective
+
+1   MN              Noun
+1   MN_Consonant    Noun_Consonant
+1   MN_Vowel        Noun_Vowel
+1   MN_Plural       Noun_Plural
+
+# Verb transformation. Different types of verbs can take on
+# varying grammatical rules in a sentence. 
+
+# Two conjunctive verbs in a row
+0.5 Verb_Conjunctive    Verb_Conjunctive and Verb_Conjunctive
+
+# Two intransitives in a row
+0.5 Verb_Intransitive   Verb_Intransitive and Verb_Intransitive
+0.5 Verb_Intransitive_Present_ThirdSingular   Verb_Intransitive_Present_ThirdSingular and Verb_Intransitive_Present_ThirdSingular
+0.5 Verb_Intransitive_Present_NoneThirdSingular   Verb_Intransitive_Present_NoneThirdSingular and Verb_Intransitive_Present_NoneThirdSingular
+
+# Two transitives in a row
+0.5 Verb_Transitive     Verb_Transitive and Verb_Transitive
+
+# Emotive transitives can function transitives
+0.5 Verb_Transitive     Verb_Transitive_Emotive
+0.5 Verb_Transitive_Present_NoneThirdSingular     Verb_Transitive_Emotive_Present_NoneThirdSingular
+0.5 Verb_Transitive_Present_ThirdSingular     Verb_Transitive_Emotive_Present_ThirdSingular
+
+# Vocabulary.  Your program can see that "ate" is a terminal
+# symbol because there exists no rule for rewriting it.
+# Any symbol that can rewrite as a terminal (or a string of 
+# terminals, like "chief of staff") is called a "preterminal."  Notice 
+# that a preterminal is a special kind of nonterminal.
+
+1   Verb_Auxiliary_Present_NoneThirdSingular    do 
+1   Verb_Auxiliary_Present_ThirdSingular        does
+1   Verb_Auxiliary_Present                      will
+1   Verb_Auxiliary_Present                      did
+
+1   Verb_Auxiliary_PastParticiple_ThirdSingular         has
+1   Verb_Auxiliary_PastParticiple_NoneThirdSingular     have
+
+1   Verb_Auxiliary_PresentParticiple_ThirdSingular      was
+1   Verb_Auxiliary_PresentParticiple_NoneThirdSingular  were
+1   Verb_Auxiliary_PresentParticiple_FirstPerson        am
+1   Verb_Auxiliary_PresentParticiple_SecondPerson       are
+1   Verb_Auxiliary_PresentParticiple_ThirdSingular      is
+1   Verb_Auxiliary_PresentParticiple_Plural             are
+
+0.5 Verb_Conjunctive_Past    thought
+0.5 Verb_Conjunctive_Past    saw
+0.5 Verb_Conjunctive_Past    understood
+0.5 Verb_Conjunctive_Past    heard
+0.5 Verb_Conjunctive_Past    believed
+
+0.5 Verb_Conjunctive_Present_NoneThirdSingular    think
+0.5 Verb_Conjunctive_Present_NoneThirdSingular    see
+0.5 Verb_Conjunctive_Present_NoneThirdSingular    understand
+0.5 Verb_Conjunctive_Present_NoneThirdSingular    hear
+0.5 Verb_Conjunctive_Present_NoneThirdSingular    believe
+
+0.5 Verb_Conjunctive_Present_ThirdSingular    thinks
+0.5 Verb_Conjunctive_Present_ThirdSingular    sees
+0.5 Verb_Conjunctive_Present_ThirdSingular    understands
+0.5 Verb_Conjunctive_Present_ThirdSingular    hears
+0.5 Verb_Conjunctive_Present_ThirdSingular    believes
+
+0.5 Verb_Conjunctive_PresentParticiple    thinking
+0.5 Verb_Conjunctive_PresentParticiple    seeing
+0.5 Verb_Conjunctive_PresentParticiple    understanding
+0.5 Verb_Conjunctive_PresentParticiple    hearing
+0.5 Verb_Conjunctive_PresentParticiple    believing
+
+1   Verb_Intransitive_Past   sighed
+1   Verb_Intransitive_Past   ate
+1   Verb_Intransitive_Past   understood
+1   Verb_Intransitive_Past   slept
+1   Verb_Intransitive_Past   shouted
+1   Verb_Intransitive_Past   appeared
+
+1   Verb_Intransitive_Present_NoneThirdSingular   sigh
+1   Verb_Intransitive_Present_NoneThirdSingular   eat
+1   Verb_Intransitive_Present_NoneThirdSingular   understand
+1   Verb_Intransitive_Present_NoneThirdSingular   sleep
+1   Verb_Intransitive_Present_NoneThirdSingular   shout
+1   Verb_Intransitive_Present_NoneThirdSingular   appear
+
+1   Verb_Intransitive_Present_ThirdSingular   sighs
+1   Verb_Intransitive_Present_ThirdSingular   eats
+1   Verb_Intransitive_Present_ThirdSingular   understands
+1   Verb_Intransitive_Present_ThirdSingular   sleeps
+1   Verb_Intransitive_Present_ThirdSingular   shouts
+1   Verb_Intransitive_Present_ThirdSingular   appears
+
+1   Verb_Intransitive_PresentParticiple   sighing
+1   Verb_Intransitive_PresentParticiple   eating
+1   Verb_Intransitive_PresentParticiple   understanding
+1   Verb_Intransitive_PresentParticiple   sleeping
+1   Verb_Intransitive_PresentParticiple   shouting
+1   Verb_Intransitive_PresentParticiple   appearing
+
+1   Verb_Transitive_Past	ate
+2	Verb_Transitive_Past	wanted
+0.2	Verb_Transitive_Past	kissed
+2	Verb_Transitive_Past	understood
+0.1	Verb_Transitive_Past	pickled
+0.1 Verb_Transitive_Past    haunted
+0.2 Verb_Transitive_Past    asked for
+0.1 Verb_Transitive_Past    worked on
+
+1   Verb_Transitive_Present_NoneThirdSingular	eat
+2	Verb_Transitive_Present_NoneThirdSingular	want
+0.2	Verb_Transitive_Present_NoneThirdSingular	kiss
+2	Verb_Transitive_Present_NoneThirdSingular	understand
+0.1	Verb_Transitive_Present_NoneThirdSingular	pickle
+0.1 Verb_Transitive_Present_NoneThirdSingular   haunt
+0.2 Verb_Transitive_Present_NoneThirdSingular   ask for
+0.1 Verb_Transitive_Present_NoneThirdSingular   work on
+
+1   Verb_Transitive_Present_ThirdSingular	eats
+2	Verb_Transitive_Present_ThirdSingular	wants
+0.2	Verb_Transitive_Present_ThirdSingular	kisses
+2	Verb_Transitive_Present_ThirdSingular	understands
+0.1	Verb_Transitive_Present_ThirdSingular	pickles
+0.1 Verb_Transitive_Present_ThirdSingular   haunts
+0.2 Verb_Transitive_Present_ThirdSingular   asks for
+0.1 Verb_Transitive_Present_ThirdSingular   works on
+
+1   Verb_Transitive_PresentParticiple	eating
+2	Verb_Transitive_PresentParticiple	wanting
+0.2	Verb_Transitive_PresentParticiple	kissing
+2	Verb_Transitive_PresentParticiple	understanding
+0.1	Verb_Transitive_PresentParticiple	pickling
+0.1 Verb_Transitive_PresentParticiple   haunting
+0.2 Verb_Transitive_PresentParticiple   asking for
+0.1 Verb_Transitive_PresentParticiple   working on
+
+1   Verb_Transitive_Emotive_Past  perplexed
+1   Verb_Transitive_Emotive_Past  shocked
+1   Verb_Transitive_Emotive_Past  dawned upon
+1   Verb_Transitive_Emotive_Past  worried
+1   Verb_Transitive_Emotive_Past  enraged
+
+1   Verb_Transitive_Emotive_Present_NoneThirdSingular  perplexe
+1   Verb_Transitive_Emotive_Present_NoneThirdSingular  shock
+1   Verb_Transitive_Emotive_Present_NoneThirdSingular  dawn upon
+1   Verb_Transitive_Emotive_Present_NoneThirdSingular  worry
+1   Verb_Transitive_Emotive_Present_NoneThirdSingular  enrage
+
+1   Verb_Transitive_Emotive_Present_ThirdSingular  perplexes
+1   Verb_Transitive_Emotive_Present_ThirdSingular  shocks
+1   Verb_Transitive_Emotive_Present_ThirdSingular  dawns upon
+1   Verb_Transitive_Emotive_Present_ThirdSingular  worries
+1   Verb_Transitive_Emotive_Present_ThirdSingular  enrages
+
+1   Verb_Transitive_Emotive_PresentParticiple  perplexing
+1   Verb_Transitive_Emotive_PresentParticiple  shocking
+1   Verb_Transitive_Emotive_PresentParticiple  dawning upon
+1   Verb_Transitive_Emotive_PresentParticiple  worrying
+1   Verb_Transitive_Emotive_PresentParticiple  enraging
+
+1   Noun            Noun_Consonant
+0.1 Noun            Noun_Vowel
+1	Noun_Consonant	president
+1	Noun_Consonant	sandwich
+1	Noun_Consonant	pickle
+1	Noun_Consonant	chief of staff
+1	Noun_Consonant	floor
+1   Noun_Consonant  spectre
+1   Noun_Consonant  desk
+1   Noun_Consonant  proposal
+1   Noun_Vowel      orange
+
+1	Noun_Plural	    presidents
+1	Noun_Plural	    sandwiches
+1	Noun_Plural	    pickles
+1	Noun_Plural	    chiefs of staff
+1	Noun_Plural	    floors
+1   Noun_Plural     spectres
+1   Noun_Plural     desks
+1   Noun_Plural     proposals
+1   Noun_Plural     oranges
+
+1   NP_Object           Name
+1   NP_Subject          Name
+1   NP_ThirdSingular    Name 
+
+1   Name    Sally
+1   Name    Henry
+1   Name    Marx
+1   Name    Europe
+
+1   NP_NoneThirdSingular_Subject                Pronoun_FirstPerson_Subject
+1   NP_NoneThirdSingular_Subject                Pronoun_SecondPerson
+2   NP_NoneThirdSingular_Subject                Pronoun_NoneThirdSingular_Subject
+
+1   NP_NoneThirdSingular_Object                Pronoun_FirstPerson_Object
+1   NP_NoneThirdSingular_Object                Pronoun_SecondPerson
+2   NP_NoneThirdSingular_Object                Pronoun_NoneThirdSingular_Object
+
+1   NP_Subject_Plural   Pronoun_NoneThirdSingular_Subject
+
+1   Pronoun_FirstPerson_Subject         I
+1   Pronoun_SecondPerson                you
+1   Pronoun_ThirdSingular               they
+1   Pronoun_ThirdSingular               he
+1   Pronoun_ThirdSingular               she
+1   Pronoun_NoneThirdSingular_Subject   we
+1   Pronoun_NoneThirdSingular_Subject   they
+
+1   Pronoun_FirstPerson_Object          me
+1   Pronoun_NoneThirdSingular_Object    us
+1   Pronoun_NoneThirdSingular_Object    them
+
+1   Adjective               Adjective_Consonant
+0.1 Adjective               Adjective_Vowel
+1	Adjective_Consonant	    fine
+1	Adjective_Consonant	    delicious
+1	Adjective_Consonant	    perplexed
+1	Adjective_Consonant	    pickled
+1   Adjective_Vowel         angry
+
+1   Adverb              Adverb_Consonant
+0.1 Adverb              Adverb_Vowel
+1   Adverb_Consonant    truly
+1   Adverb_Consonant    very
+1   Adverb_Vowel        incredibly
+1   Adverb_Consonant    magnificently
+1   Adverb_Vowel        outrageously
+1   Adverb_Vowel        overwhelmingly
+1   Adverb_Vowel        increasingly
+1   Adverb_Consonant    surprisingly
+1   Adverb_Consonant    dauntingly
+1   Adverb_Consonant    remarkably
+
+1	Preposition	with
+1	Preposition	on
+1	Preposition	under
+1	Preposition	in
