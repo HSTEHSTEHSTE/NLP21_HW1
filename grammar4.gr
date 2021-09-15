@@ -103,12 +103,23 @@
 0.5     NP_Subject  NP_Subject_Plural
 1       NP_Subject  NP_Subject_ThirdSingular
 
+0.5     NP_Object  NP_Object_NoneThirdSingular
+0.5     NP_Object  NP_Object_Plural
+1       NP_Object  NP_Object_ThirdSingular
+
 1   NP_Subject_ThirdSingular    D_Definite MN
 1   NP_Subject_ThirdSingular    D_Indefinite_Consonant MN_Consonant
 0.1 NP_Subject_ThirdSingular    D_Indefinite_Vowel MN_Vowel
 
+1   NP_Object_ThirdSingular    D_Definite MN
+1   NP_Object_ThirdSingular    D_Indefinite_Consonant MN_Consonant
+0.1 NP_Object_ThirdSingular    D_Indefinite_Vowel MN_Vowel
+
 1   NP_Subject_Plural    D_Definite_Plural MN_Plural
 1   NP_Subject_Plural    D_Indefinite_Plural MN_Plural
+
+1   NP_Object_Plural    D_Definite_Plural MN_Plural
+1   NP_Object_Plural    D_Indefinite_Plural MN_Plural
 
 1    NP                              NP_NoneThirdSingular
 0.01 NP_NoneThirdSingular            NP_ThirdSingular and NP_ThirdSingular
@@ -311,6 +322,7 @@
 1   Noun_Consonant  desk
 1   Noun_Consonant  proposal
 1   Noun_Vowel      orange
+1   Noun_Vowel      apple
 
 1	Noun_Plural	    presidents
 1	Noun_Plural	    sandwiches
@@ -321,6 +333,7 @@
 1   Noun_Plural     desks
 1   Noun_Plural     proposals
 1   Noun_Plural     oranges
+1   Noun_Plural     apples
 
 1   NP_Object           Name
 1   NP_Subject          Name
@@ -340,6 +353,7 @@
 2   NP_NoneThirdSingular_Object                Pronoun_NoneThirdSingular_Object
 
 1   NP_Subject_Plural   Pronoun_NoneThirdSingular_Subject
+1   NP_Object_Plural    Pronoun_NoneThirdSingular_Subject
 
 1   Pronoun_FirstPerson_Subject         I
 1   Pronoun_SecondPerson                you
@@ -359,6 +373,7 @@
 1	Adjective_Consonant	    delicious
 1	Adjective_Consonant	    perplexed
 1	Adjective_Consonant	    pickled
+1	Adjective_Consonant	    ambivalent
 1   Adjective_Vowel         angry
 
 1   Adverb              Adverb_Consonant
